@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>register</title>
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+    <%- include("./partials/header") %>
+    <div>
+        <form class="userForm" method="post" class="registerForm" action="/api/v1/user/register">
+            <label>Username:</label>
+            <input type="text" name="userName">
+            <label>Email:</label>
+            <input type="email" name="email">
+            <label>Password:</label>
+            <input type="password" name="password">
+            <input type="submit" value="Sign In">
+            <div>
+                Didn't register? <a href="/api/v1/user/login">Please Login</a>
+            </div>
+        </form>
+    </div>
+
+    <%- include("./partials/footer")%>
+    
+</body>
+</html>

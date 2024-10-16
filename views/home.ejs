@@ -1,0 +1,102 @@
+<!-- User-interface -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo - Home</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <%- include("./partials/header") %>
+    
+    <%= locals.name %>
+    <% let date=new Date().toISOString().split(`T`)[0]%>
+    <!-- <% console.log(date)%> -->
+    <div class="mainContainer">
+    <div class="form-container">
+        <form action="/api/v1/todo" method="post">
+            <label for="todoTask">Todo:</label>
+            <input type="text" name="todo" id="todoTask" placeholder="Enter a todo" required>
+            <label for="dueDate">Completion Date:</label>
+            <input type="date" name="dueDate" id="dueDate" placeholder="Enter a date" min="<%= date%>"  required>
+
+            <button id="formBtn" type="submit">Add</button>
+        </form>
+
+    </div>
+
+    <div class="tableContainer">
+        <h1>List Of Task</h1>
+    <table>
+        <tr>
+            <th>Sl.No</th>
+            <th>Todo</th>
+            <th>Update Todo</th>
+            <th>Update Status</th>
+            <th>Delete Todo</th>
+            <th>Status</th>
+
+        </tr>
+        <tbody>
+            <%locals.todos.forEach((doc,index)=>{%>
+                <tr>
+                    <td><%= index+1%></td>
+             <% if(doc.isCompleted){%>
+                        <td class="strike"><%= doc.todo%></td>
+                        <%}else{%>
+                            <td><%= doc.todo%></td>
+                        <%}%>
+    
+                    <td>
+                        
+                        <a href="/api/v1/todo/<%= doc._id%>" title="Click to update a todo" > <i class="fa-regular fa-pen-to-square"></i></a></td>
+                    <td>
+                        <form action="/api/v1/todo/status/<%= doc._id%>?_method=PATCH" method="post">
+                            <input type="hidden" name="isCompleted" value="true">
+                    
+                            <button   id="updateStatus" type="submit"title="Click to update the status of todo as completed.">Update Status</button>
+                        </form>
+                    </td>
+                    <td><form action="/api/v1/todo/<%= doc._id%>?_method=DELETE" method="post">
+                        <button  id="deleteBtn" type="submit" title="Click to delete a todo" ><i class="fa-regular fa-trash-can"></i></button></td>
+                    </form>
+                    <!-- <td><%= doc.dueDate %></td> -->
+                    <td>
+                        <% const currentDate = new Date(); %>
+                        <% const dueDate = new Date(doc.dueDate); %>
+                        <% let statusText; %>
+                        <% let statusClass; %>
+
+                        <% if (currentDate > dueDate && !doc.isCompleted) { %>
+                            <% statusText = "Pending"; %>
+                            <% statusClass = "pending"; %>
+
+                            <%}else if(doc.isCompleted){%>
+                            <% statusText = "Completed"; %>
+                            <% statusClass = "completed"; %>
+
+                        <% } else { %>
+                            <% statusText = "Not Applicable"; %>
+                            <% statusClass = "not-applicable "; %>
+
+                        <% } %>
+                        <p id="status"  class="<%= statusClass %>"><%= statusText %></p>
+
+                    </td>
+                    
+                </tr>
+        
+
+            <%})%>
+        
+        </tbody>
+
+    </table>
+</div>
+</div>
+
+    <%- include("./partials/footer") %>
+</body>
+</html>

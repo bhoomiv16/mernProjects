@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="/css/index.css">
+
+</head>
+<body>
+    <%- include("./partials/header")%>
+    <div>
+        <form class="userForm" method="post" class="loginForm" action="/api/v1/user/login">
+            <label>Email:</label>
+            <input type="email" name="email">
+            <label>Password:</label>
+            <input type="password" name="password">
+            <input type="submit" value="Log In">
+            <div>
+                Didn't register? <a href="/api/v1/user/register">Please Register</a>
+            </div>
+        </form>
+    </div>
+    <%- include("./partials/footer")%>
+    
+</body>
+</html> 

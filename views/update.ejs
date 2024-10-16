@@ -1,0 +1,27 @@
+<!-- User-interface -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo - Home</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <%- include("./partials/header") %>
+    <%= locals.name %>
+    <h1 class="updateText">Update Todo</h1>
+    <div class="form-container">
+        <form id="updateForm" action="/api/v1/todo/<%= todos._id%>?_method=PATCH" method="post" class="formUpdate">
+            <input type="text" name="todo"  value="<%=todos.todo%>">
+            <button id="formBtn" type="submit">Add</button>
+        </form>
+
+    </div>
+ <div class="updateFooter">
+
+     <%- include("./partials/footer") %>
+    </div>
+</body>
+</html>
